@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <title>{% block title %}Dynamic Dashboard{% endblock %}</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f6f9;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar .menu-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      background-color: #34495e;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .sidebar .menu-item:hover {
+      background-color: #1abc9c;
+    }
+
+    .header {
+      background-color: #ecf0f1;
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+      width: 100%;
+      padding: 20px;
+      background-color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      padding: 10px;
+    }
+    
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <h2>Dashboard</h2>
+      <div class="menu-item" onclick="showContent('ruralproducercreate')">New Rural Producer</div>
+      <div class="menu-item" onclick="showContent('analytics')">Analytics</div>
+      <div class="menu-item" onclick="showContent('reports')">Reports</div>
+      <div class="menu-item" onclick="showContent('settings')">Settings</div>
+    </div>
+    <div class="footer">© 2024 My Dashboard</div>
+  </div>
+
+  <!-- Main content -->
+  <div style="flex-grow: 1;">
+    <!-- Header -->
+    <div class="header">
+      <h1>{% block header %}Welcome to the Dashboard{% endblock %}</h1>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+      {% block content %}
+      <!-- Default content will go here -->
+      {% endblock %}
+    </div>
+  </div>
+
+  <script>
+    // Function to show the selected content and hide others
+    function showContent(section) {
+      // Hide all content sections
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach((sec) => sec.classList.add('hidden'));
+
+      // Show the selected section
+      document.getElementById(section).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
