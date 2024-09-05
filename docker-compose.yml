@@ -14,12 +14,13 @@ services:
       - db
   db:
     image: postgres:15
+    ports:
+      - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ./db_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=brain_agriculture
       - POSTGRES_PASSWORD=brain_agriculture
       - POSTGRES_DB=brain_agriculture_dev
 
-volumes:
-  postgres_data:
+

@@ -1,0 +1,46 @@
+/* styles.css */
+.form-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    display:flex;
+}
+
+.form-input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Style for the checkbox group container */
+.checkbox-group {
+    display: flexbox;
+    flex-direction: row;
+    gap: 100px;
+/* making the box bigger */
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    max-width: 400px;
+    font-size: 16px;
+    label {
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        
+    }
+}

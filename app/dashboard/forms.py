@@ -1,9 +1,11 @@
 from django import forms
 from rural_producer.models import RuralProducer
+from crop.models import Crop
 
 # class CropsForm(forms.Form):
 #     crop_name = forms.CharField(max_length=100)
 #     crop_area = forms.FloatField()
+
 
 class RuralProducerForm(forms.ModelForm):
     name = forms.CharField(max_length=100)
@@ -18,9 +20,18 @@ class RuralProducerForm(forms.ModelForm):
     farm_area = forms.FloatField()
     vegetation_area = forms.FloatField()
 
-    # related to the crops, list of crops, many to many field
-    # crops = forms.ModelMultipleChoiceField(queryset=None)
+    # crops many to many fields
+    crops = forms.ModelMultipleChoiceField(queryset=Crop.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = RuralProducer
-        fields = ['name', 'cpf', 'city', 'state', 'farm_name', 'farm_area', 'vegetation_area']
+        fields = [
+            "name",
+            "cpf",
+            "city",
+            "state",
+            "farm_name",
+            "farm_area",
+            "vegetation_area",
+            "crops",
+        ]
