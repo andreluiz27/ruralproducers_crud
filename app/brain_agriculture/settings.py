@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "widget_tweaks",
+    "django_extensions",
 
     "rural_producer",
     "dashboard",
