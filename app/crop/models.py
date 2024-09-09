@@ -10,7 +10,7 @@ class Crop(models.Model):
         ("TOBACCO", "Tobacco"),
         ("RICE", "Rice"),
     ]
-    crop_plantation = models.CharField(max_length=30, choices=crop_plantation_types)
+    crop_plantation = models.CharField(max_length=30, choices=crop_plantation_types, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

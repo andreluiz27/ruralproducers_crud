@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<!-- Analytics Section -->
+<div id="analytics" class="content py-5">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="mb-4 display-3 text-primary">Farm Analytics</h2>
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+            <h5 class="card-title text-success display-4">Total Farms: <span style="font-size: x-large;">{{ total_farms }}</span></h5>
+            <h5 class="card-title text-success display-4">Total Plantable Area: <span style="font-size: x-large;">{{ total_plantable_area }}</span></h5>
+            <h5 class="card-title text-success display-4">Total Vegetation Area: <span style="font-size: x-large;">{{ total_vegetation_area }}</span></h5>
+            <h5 class="card-title text-success display-4">Total Crops: <span style="font-size: x-large;">{{ total_crops }}</span></h5>
+            <h5 class="card-title text-success display-4">Total Rural Producers: <span style="font-size: x-large;">{{ total_rural_producers }}</span></h5>
+
+            {% for key, item in crops_in_farm.items %}
+              <h5 class="card-title text-success display-4">{{ key }}: <span style="font-size: x-large;">{{ item }}</span></h5>
+            {% endfor %}
+
+            <!-- Pie Charts Side by Side -->
+            <div class="row mt-5">
+              <!-- Pie Chart for Overall Analytics -->
+              <div class="col-md-4 text-center">
+                <h3>Farms Area Analytics</h3>
+                <div class="chart-container">
+                  <canvas id="overallPieChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Pie Chart for States Distribution -->
+              <div class="col-md-4 text-center">
+                <h3>States Distribution</h3>
+                <div class="chart-container">
+                  <canvas id="statePieChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Pie Chart for Crops Distribution -->
+              <div class="col-md-4 text-center">
+                <h3>Crops Distribution</h3>
+                <div class="chart-container">
+                  <canvas id="cropsPieChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Data for the overall pie chart
+  const overallData = {
+    labels: ['Total Farms', 'Plantable Area', 'Vegetation Area', 'Total Crops'],
+    datasets: [{
+      label: 'Overall Analytics',
+      data: [{{ total_farms }}, {{ total_plantable_area }}, {{ total_vegetation_area }}, {{ total_crops }}],
+      backgroundColor: [
+        '#3498db',
+        '#2ecc71',
+        '#e74c3c',
+        '#f39c12'
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  // Config for the overall pie chart
+  const overallConfig = {
+    type: 'pie',
+    data: overallData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'left',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return tooltipItem.label + ': ' + tooltipItem.raw;
+            }
+          }
+        }
+      }
+    }
+  };
+
+  // Data for the crops pie chart
+  const cropsData = {
+    labels: [ {% for key in crops_in_farm %}'{{ key }}'{% if not forloop.last %}, {% endif %}{% endfor %} ],
+    datasets: [{
+      label: 'Crops Distribution',
+      data: [ {% for item in crops_in_farm.values %}{{ item }}{% if not forloop.last %}, {% endif %}{% endfor %} ],
+      backgroundColor: [
+        '#9b59b6',
+        '#f39c12',
+        '#e74c3c',
+        '#1abc9c',
+        '#3498db',
+        '#2ecc71'
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  // Config for the crops pie chart
+  const cropsConfig = {
+    type: 'pie',
+    data: cropsData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'left',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return tooltipItem.label + ': ' + tooltipItem.raw;
+            }
+          }
+        }
+      }
+    }
+  };
+
+  // Data for the states pie chart
+  const stateData = {
+    labels: [ {% for key in states %}'{{ key }}'{% if not forloop.last %}, {% endif %}{% endfor %} ],
+    datasets: [{
+      label: 'State Distribution',
+      data: [ {% for value in states.values %}{{ value }}{% if not forloop.last %}, {% endif %}{% endfor %} ],
+      backgroundColor: [
+        '#9b59b6',
+        '#f39c12',
+        '#e74c3c',
+        '#1abc9c',
+        '#3498db',
+        '#2ecc71',
+        '#34495e',
+        '#95a5a6',
+        '#d35400'
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  // Config for the states pie chart
+  const stateConfig = {
+    type: 'pie',
+    data: stateData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'left',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return tooltipItem.label + ': ' + tooltipItem.raw;
+            }
+          }
+        }
+      }
+    }
+  };
+
+  // Render the charts
+  window.onload = function() {
+    const overallCtx = document.getElementById('overallPieChart').getContext('2d');
+    new Chart(overallCtx, overallConfig);
+
+    const stateCtx = document.getElementById('statePieChart').getContext('2d');
+    new Chart(stateCtx, stateConfig);
+
+    const cropsCtx = document.getElementById('cropsPieChart').getContext('2d');
+    new Chart(cropsCtx, cropsConfig);
+  };
+</script>
+
+<style>
+  .chart-container {
+    position: relative;
+    width: 100%;  /* Ensure the container fits its column */
+    height: 400px; /* Adjust height as needed */
+  }
+
+  #overallPieChart, #cropsPieChart, #statePieChart {
+    width: 80% !important; /* Ensure the canvas scales to the container */
+    height: 100% !important; /* Ensure the canvas scales to the container */
+  }
+</style>
+
+{% endblock %}

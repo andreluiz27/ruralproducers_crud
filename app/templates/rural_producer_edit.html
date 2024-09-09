@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Home Section -->
+<div id="ruralproduceredit" class="content-section">
+  <h2>Edit Rural Producer: {{ form.initial.name }} </h2>
+  
+  <form method="post">
+    {% csrf_token %}
+
+   
+    {% render_field form.city placeholder="City" class="form-input" %}
+    {% if form.city.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.city.errors }}
+      </div>
+    {% endif %}
+
+    {% render_field form.state placeholder="State" class="form-input" %}
+    {% if form.state.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.state.errors }}
+      </div>
+    {% endif %}
+
+    {% render_field form.farm_name placeholder="Farm Name" class="form-input" %}
+    {% if form.farm_name.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.farm_name.errors }}
+      </div>
+    {% endif %}
+    
+    {% render_field form.farm_area placeholder="Farm Area" class="form-input" %}
+    {% if form.farm_area.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.farm_area.errors }}
+      </div>
+    {% endif %}
+
+    {% render_field form.plantable_area placeholder="Plantable Area" class="form-input" %}
+    {% if form.plantable_area.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.plantable_area.errors }}
+      </div>
+    {% endif %}
+
+    {% render_field form.vegetation_area placeholder="Vegetation Area" class="form-input" %}
+    {% if form.vegetation_area.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.vegetation_area.errors }}
+      </div>
+    {% endif %}
+
+    <b style="font-size: large;">Crops</b>
+    <br><br>
+    {% render_field form.crops class="checkbox-group" %}
+    {% if form.crops.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.crops.errors }}
+      </div>
+    {% endif %}
+    
+    <br>
+    <!-- Showing non-field errors -->
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <br>
+    <button type="submit" class="btn btn-default">Update Rural Producer</button>
+  </form>
+
+</div>
+{% endblock %}

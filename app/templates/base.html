@@ -47,7 +47,7 @@
 
     .header {
       background-color: #ecf0f1;
-      padding: 20px;
+      padding: 8px;
       width: 100%;
       text-align: center;
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -57,6 +57,7 @@
       width: 100%;
       padding: 20px;
       background-color: white;
+
     }
 
     .hidden {
@@ -76,9 +77,9 @@
   <div class="sidebar">
     <div>
       <h2>Dashboard</h2>
-      <div class="menu-item" onclick="showContent('ruralproducercreate')">New Rural Producer</div>
-      <div class="menu-item" onclick="showContent('analytics')">Analytics</div>
-      <div class="menu-item" onclick="showContent('reports')">Reports</div>
+      <div class="menu-item" onclick="location.href='{% url 'ruralproducer-create'%}';">New Rural Producer</div>
+      <div class="menu-item" onclick="location.href='{% url 'ruralproducer-list'%}';">Rural Producer List</div>
+      <div class="menu-item" onclick="location.href='{% url 'analytics'%}';">Analytics</div>
       <div class="menu-item" onclick="showContent('settings')">Settings</div>
     </div>
     <div class="footer">© 2024 My Dashboard</div>
@@ -88,7 +89,7 @@
   <div style="flex-grow: 1;">
     <!-- Header -->
     <div class="header">
-      <h1>{% block header %}Welcome to the Dashboard{% endblock %}</h1>
+      <h1>{% block header %}Rural Producers Dashboard{% endblock %}</h1>
     </div>
 
     <!-- Content Area -->
@@ -110,5 +111,9 @@
       document.getElementById(section).classList.remove('hidden');
     }
   </script>
+
+  
+
+
 </body>
 </html>
